@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from "react";
 import "../Components/Nav.css";
 function Nav() {
-    const [show, handleShow] = useState(false);
-    useEffect(() => {
-			window.addEventListener("scroll", () => {
-				if (window.scrollY > 100) {
-					handleShow(true);
-				} else handleShow(false);
-			});
-			// return () => {
-			// 	window.removeEventListener("scroll");
-			// }; // ?when I turn this on the whole thing is gone down...why is that?
-		}, []);
+	const [show, handleShow] = useState(false);
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY > 100) {
+				handleShow(true);
+			} else {
+				handleShow(false);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+		// useEffect(() => {
+		// 		window.addEventListener("scroll", () => {
+		// 			if (window.scrollY > 100) {
+		// 				handleShow(true);
+		// 			} else handleShow(false);
+		// 		});
+		// return () => {
+		// 	window.removeEventListener("scroll");
+		// }; // ?when I turn this on the whole thing is gone down...why is that?
+	}, []);
 	return (
 		<div className={`nav ${show && "nav__black"}`}>
 			<img
